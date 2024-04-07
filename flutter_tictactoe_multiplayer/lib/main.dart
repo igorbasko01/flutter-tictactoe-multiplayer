@@ -7,27 +7,11 @@ void main() {
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(
-        // This is the theme of your application.
-        //
-        // TRY THIS: Try running your application with "flutter run". You'll see
-        // the application has a purple toolbar. Then, without quitting the app,
-        // try changing the seedColor in the colorScheme below to Colors.green
-        // and then invoke "hot reload" (save your changes or press the "hot
-        // reload" button in a Flutter-supported IDE, or press "r" if you used
-        // the command line to start the app).
-        //
-        // Notice that the counter didn't reset back to zero; the application
-        // state is not lost during the reload. To reset the state, use hot
-        // restart instead.
-        //
-        // This works for code too, not just values: Most code changes can be
-        // tested with just a hot reload.
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
@@ -39,15 +23,6 @@ class MyApp extends StatelessWidget {
 class MyHomePage extends StatefulWidget {
   const MyHomePage({super.key, required this.title});
 
-  // This widget is the home page of your application. It is stateful, meaning
-  // that it has a State object (defined below) that contains fields that affect
-  // how it looks.
-
-  // This class is the configuration for the state. It holds the values (in this
-  // case the title) provided by the parent (in this case the App widget) and
-  // used by the build method of the State. Fields in a Widget subclass are
-  // always marked "final".
-
   final String title;
 
   @override
@@ -58,29 +33,40 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: Column(
-      children: [
-        const Text("Welcome to the game of Tic Tac Toe!"),
-        Expanded(child: _board()),
-        const Text("Player X's turn"),
-      ],
-    ));
+        body: Padding(
+            padding: const EdgeInsets.all(20),
+            child: Column(
+              children: [
+                const Expanded(
+                    flex: 1,
+                    child: Center(
+                        child: Text("Welcome to the game of Tic Tac Toe!"))),
+                Expanded(flex: 3, child: _board()),
+                const Expanded(flex: 1, child: Text("Player X's turn")),
+              ],
+            )));
   }
 
   Widget _board() {
-    double gridHeight = MediaQuery.of(context).size.width / 3 * 3;
-    return SizedBox(
-      height: gridHeight,
-      child: GridView.count(
-          crossAxisCount: 3,
-          shrinkWrap: true,
-          physics: const NeverScrollableScrollPhysics(),
-          children: List.generate(9, (index) {
-            return Container(
-                decoration: BoxDecoration(
-                    border: Border.all(color: Colors.blue, width: 2)),
-                child: Center(child: Text('Cell $index')));
-          }))
-    );
+    return AspectRatio(
+        aspectRatio: 1.0,
+        child: GridView.builder(
+            itemCount: 9,
+            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 3, crossAxisSpacing: 10, mainAxisSpacing: 10),
+            itemBuilder: (BuildContext context, int index) {
+              return GestureDetector(
+                  onTap: () {},
+                  child: Container(
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(20),
+                        border: Border.all(width: 5, color: Colors.blue),
+                        color: Colors.white),
+                    child: const Center(
+                        child: Text('O',
+                            style:
+                                TextStyle(fontSize: 64, color: Colors.blue))),
+                  ));
+            }));
   }
 }
