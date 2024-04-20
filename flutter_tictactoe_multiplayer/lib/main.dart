@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 
 void main() {
@@ -56,14 +58,16 @@ class _MyHomePageState extends State<MyHomePage> {
                 crossAxisCount: 3, crossAxisSpacing: 10, mainAxisSpacing: 10),
             itemBuilder: (BuildContext context, int index) {
               return GestureDetector(
-                  onTap: () {},
+                  onTap: () {
+                    log("Tapped on cell $index");
+                  },
                   child: Container(
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(20),
                         border: Border.all(width: 5, color: Colors.blue),
                         color: Colors.white),
                     child: const Center(
-                        child: Text('O',
+                        child: Text('',
                             style:
                                 TextStyle(fontSize: 64, color: Colors.blue))),
                   ));
